@@ -6,7 +6,20 @@ Production-oriented Supabase guidance for AI coding agents across web, mobile, b
 > **Status:** Public / reusable  
 > **License:** MIT
 
-This repository provides one stable `SKILL.md` entrypoint that combines and routes to the official Supabase agent guidance plus Supabase Postgres best practices. It is intentionally platform-agnostic and can be used in Lovable or other compatible agent workflows.
+This repository provides one stable `SKILL.md` entrypoint that combines and routes to the official Supabase agent guidance plus Supabase Postgres best practices. It is intentionally **platform-agnostic** and is designed to work across Agent Skills-compatible coding environments.
+
+## Compatible environments
+
+This skill can be used with:
+
+- Lovable
+- OpenAI Codex
+- Cursor
+- Visual Studio Code with GitHub Copilot Agent Skills
+- Google Antigravity
+- Other coding agents and vibe-coding tools that support the Agent Skills / `SKILL.md` format
+
+The skill logic is not tied to any editor. Only the installation method changes between platforms.
 
 ## What it covers
 
@@ -17,19 +30,91 @@ This repository provides one stable `SKILL.md` entrypoint that combines and rout
 - Query performance, indexes, connections, locking, and data-access patterns
 - Monitoring, diagnostics, schema design, and advanced Postgres features
 
-## Import into Lovable
+## Installation and usage
 
-1. Open your Lovable workspace.
-2. Go to **Settings -> Skills -> Import -> GitHub**.
-3. Paste this repository URL:
+### Lovable
+
+Open your Lovable workspace and go to:
+
+**Settings -> Skills -> Import -> GitHub**
+
+Paste:
 
 ```text
 https://github.com/muhammedelessi/supabase-agent-skill
 ```
 
-4. Import the skill and keep it enabled for projects that use Supabase.
+Keep the skill enabled for projects that use Supabase.
 
-The agent should invoke it automatically when a task involves Supabase, Postgres, Auth, RLS, SQL, migrations, indexes, Storage, Edge Functions, or related platform behavior.
+### OpenAI Codex
+
+Use Codex's skill installer to install the skill from this GitHub repository, or place the repository as a skill directory under your project's Agent Skills location, for example:
+
+```text
+.agents/skills/supabase-agent-skill/
+```
+
+The directory must contain this repository's `SKILL.md` and supporting files.
+
+### Cursor
+
+Clone or copy this repository into one of Cursor's supported skill locations.
+
+Project-level examples:
+
+```text
+.agents/skills/supabase-agent-skill/
+.cursor/skills/supabase-agent-skill/
+```
+
+User-level examples:
+
+```text
+~/.agents/skills/supabase-agent-skill/
+~/.cursor/skills/supabase-agent-skill/
+```
+
+Cursor can discover the skill automatically when the request matches its description, and it can also be invoked from Agent chat.
+
+### Visual Studio Code / GitHub Copilot
+
+Copy or clone the repository into a supported Agent Skills directory.
+
+Project-level examples:
+
+```text
+.github/skills/supabase-agent-skill/
+.agents/skills/supabase-agent-skill/
+```
+
+User-level examples:
+
+```text
+~/.copilot/skills/supabase-agent-skill/
+~/.agents/skills/supabase-agent-skill/
+```
+
+VS Code can load the skill automatically when relevant or invoke it directly from Copilot Chat.
+
+### Google Antigravity
+
+Project/workspace scope:
+
+```text
+<project-root>/.agents/skills/supabase-agent-skill/
+```
+
+Global scope for Antigravity IDE:
+
+```text
+~/.gemini/config/skills/supabase-agent-skill/
+```
+
+Use the project location when the skill should travel with the repository, or global scope when you want it available across projects on your machine.
+
+### Other Agent Skills-compatible tools
+
+Place this repository in the tool's supported skills directory so that `SKILL.md` is the entrypoint. If the tool supports the open Agent Skills format, the core workflow should remain portable even when its discovery or installation UI differs.
 
 ## Example requests
 
