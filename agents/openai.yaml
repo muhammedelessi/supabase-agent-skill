@@ -1,0 +1,3 @@
+interface:
+  display_name: "Supabase Agent Skill"
+  short_description: "Official-based Supabase guidance for any app"
