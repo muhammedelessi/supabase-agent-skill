@@ -1,40 +1,91 @@
 # Supabase Agent Skill
 
-A general-purpose Supabase skill for AI coding agents and development workflows across web, mobile, backend, SaaS, APIs, and other application types.
+Production-oriented Supabase guidance for AI coding agents across web, mobile, backend, SaaS, APIs, and other application types.
 
-This repository combines the two official Supabase agent skills currently published in `supabase/agent-skills`:
+> **Version:** 1.0.0  
+> **Status:** Public / reusable  
+> **License:** MIT
 
-- `skills/supabase`
-- `skills/supabase-postgres-best-practices`
-
-It retains the upstream MIT license and is intentionally platform-agnostic. It is not tied to Lovable, NHM, or any specific project.
+This repository provides one stable `SKILL.md` entrypoint that combines and routes to the official Supabase agent guidance plus Supabase Postgres best practices. It is intentionally platform-agnostic and can be used in Lovable or other compatible agent workflows.
 
 ## What it covers
 
-The combined skill includes guidance for Supabase Database, Auth, Edge Functions, Realtime, Storage, Vectors, Cron, Queues, client libraries, SSR integrations, CLI/MCP, schema changes, migrations, RLS, security, debugging, logs, query performance, indexes, connection management, schema design, locking, data-access patterns, monitoring, and advanced Postgres features.
+- Supabase Database, Auth, Edge Functions, Realtime, Storage, Vectors, Cron, and Queues
+- Client libraries, SSR integrations, CLI/MCP, debugging, and logs
+- Schema changes and migration safety
+- Row Level Security (RLS), grants, authorization, and secrets handling
+- Query performance, indexes, connections, locking, and data-access patterns
+- Monitoring, diagnostics, schema design, and advanced Postgres features
+
+## Import into Lovable
+
+1. Open your Lovable workspace.
+2. Go to **Settings -> Skills -> Import -> GitHub**.
+3. Paste this repository URL:
+
+```text
+https://github.com/muhammedelessi/supabase-agent-skill
+```
+
+4. Import the skill and keep it enabled for projects that use Supabase.
+
+The agent should invoke it automatically when a task involves Supabase, Postgres, Auth, RLS, SQL, migrations, indexes, Storage, Edge Functions, or related platform behavior.
+
+## Example requests
+
+```text
+Review these Supabase RLS policies for authorization problems.
+```
+
+```text
+Design a safe migration for this schema change and verify rollback risk.
+```
+
+```text
+Investigate why this Supabase query is slow and recommend the right indexes.
+```
+
+```text
+Review our Supabase Auth implementation before production release.
+```
+
+## Safety model
+
+The skill treats authentication and authorization as separate concerns, does not allow secret/service-role keys in public clients, requires deliberate RLS design for exposed data, and favors migration-safe database changes with verification after implementation.
+
+For database-specific work, it loads only the relevant Postgres best-practice references instead of injecting the entire rule set into every task.
 
 ## Repository structure
 
-- `SKILL.md` — unified entrypoint used by agents
-- `references/official-supabase.md` — synchronized copy of the official Supabase skill
-- `references/official-supabase-changelog.md` — synchronized upstream skill changelog
-- `references/postgres-best-practices/OVERVIEW.md` — official Supabase Postgres best-practices skill
-- `references/postgres-best-practices/*.md` — complete official Postgres best-practice rule set
-- `references/postgres-best-practices/CHANGELOG.md` — synchronized upstream changelog
-- `references/skill-feedback.md` — official feedback workflow
-- `assets/feedback-issue-template.md` — official feedback template
-- `agents/openai.yaml` — optional ChatGPT UI metadata
-- `.github/workflows/sync-supabase-skills.yml` — weekly/manual synchronization from Supabase upstream
-- `LICENSE` — upstream MIT license
+```text
+.
+├── SKILL.md
+├── agents/
+│   └── openai.yaml
+├── references/
+│   ├── official-supabase.md
+│   ├── official-supabase-changelog.md
+│   └── postgres-best-practices/
+├── assets/
+├── .github/workflows/
+│   └── sync-supabase-skills.yml
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+└── LICENSE
+```
 
-## Automatic updates
+## Upstream synchronization
 
-A GitHub Actions workflow checks the official `supabase/agent-skills` repository weekly and can also be run manually. When Supabase changes either official skill or its Postgres reference rules, the synchronized files in this repository are updated automatically.
+The repository includes a GitHub Actions workflow that checks the official `supabase/agent-skills` repository and synchronizes the referenced Supabase guidance. The local `SKILL.md` remains the stable routing layer.
 
-The unified `SKILL.md` remains the stable entrypoint and tells the agent when to load the official Supabase guidance and when to load the relevant Postgres rule files.
+Upstream project:
 
-## Upstream
-
+```text
 https://github.com/supabase/agent-skills
+```
 
-This repository is an unofficial repackaging for convenient use by AI agents. Supabase remains the source of the underlying official guidance.
+This repository is an **unofficial aggregation/repackaging** for convenient agent use. Supabase remains the source of the underlying official guidance.
+
+## Contributing
+
+Issues and pull requests are welcome. See `CONTRIBUTING.md` before proposing behavior changes.
