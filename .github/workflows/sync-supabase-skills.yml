@@ -1,0 +1,50 @@
+name: Sync Official Supabase Skills
+
+on:
+  push:
+    paths:
+      - ".github/workflows/sync-supabase-skills.yml"
+  schedule:
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+
+      - name: Fetch official Supabase agent skills
+        run: |
+          rm -rf /tmp/supabase-agent-skills
+          git clone --depth 1 https://github.com/supabase/agent-skills.git /tmp/supabase-agent-skills
+
+      - name: Sync official skill sources and references
+        run: |
+          mkdir -p references/postgres-best-practices
+          mkdir -p assets
+
+          cp /tmp/supabase-agent-skills/skills/supabase/SKILL.md references/official-supabase.md
+          cp /tmp/supabase-agent-skills/skills/supabase/CHANGELOG.md references/official-supabase-changelog.md
+          cp /tmp/supabase-agent-skills/skills/supabase/references/skill-feedback.md references/skill-feedback.md
+          cp /tmp/supabase-agent-skills/skills/supabase/assets/feedback-issue-template.md assets/feedback-issue-template.md
+
+          cp /tmp/supabase-agent-skills/skills/supabase-postgres-best-practices/SKILL.md references/postgres-best-practices/OVERVIEW.md
+          cp /tmp/supabase-agent-skills/skills/supabase-postgres-best-practices/CHANGELOG.md references/postgres-best-practices/CHANGELOG.md
+          cp /tmp/supabase-agent-skills/skills/supabase-postgres-best-practices/references/*.md references/postgres-best-practices/
+
+      - name: Commit synced files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add references assets
+          if git diff --cached --quiet; then
+            echo "Official Supabase skills are already up to date."
+            exit 0
+          fi
+          git commit -m "Sync official Supabase agent skills"
+          git push
